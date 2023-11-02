@@ -1,0 +1,19 @@
+{
+    "name": "khoa/khoa-storage",
+    "description": "Interact with storage",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Khoa\\KhoaStorage\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "nguyentudangkhoa",
+            "email": "nguyentudangkhoa@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "prefer-stable": true
+}
