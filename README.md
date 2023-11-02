@@ -78,3 +78,9 @@ composer require khoa/khoa-storage:dev-main
     array $headers //required. Example: ['Content-Type' => 'image/png',]
 );
 ```
+
+## 1.4 Get URL of image
+
+```bash
+get_image_url(string $fileUrl);
+```
