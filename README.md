@@ -51,32 +51,36 @@ composer require khoa/khoa-storage:dev-main
 ## 1.1 Upload file
 
 ```bash
-\StoragePackage::uploadFile(
-    string $filePath, //required
-    UploadedFile $uploadedFile // required
-);
+\StoragePackage::initStorage(?string $disk //optional. Example: 'local')
+    ->uploadFile(
+        string $filePath, //required
+        UploadedFile $uploadedFile // required
+    );
 ```
 
 ## 1.2 Show file
 
 ```bash
-\StoragePackage::getFile(string $fileUrl // required);
+\StoragePackage::initStorage(?string $disk //optional. Example: 'local')
+    ->getFile(string $fileUrl // required);
 ```
 
 ## 1.3 Delete file
 
 ```bash
-\StoragePackage::deleteFile(string $fileUrl // required);
+\StoragePackage::initStorage(?string $disk //optional. Example: 'local')
+    ->deleteFile(string $fileUrl // required);
 ```
 
 ## 1.4 Download file
 
 ```bash
-\StoragePackage::downloadFile(
-    string $fileUrl, //required. Example: 'test/image.png'
-    string $fileName, //required. Example: 'test.png'
-    array $headers //required. Example: ['Content-Type' => 'image/png',]
-);
+\StoragePackage::initStorage(?string $disk //optional. Example: 'local')
+    ->downloadFile(
+        string $fileUrl, //required. Example: 'test/image.png'
+        string $fileName, //required. Example: 'test.png'
+        array $headers //required. Example: ['Content-Type' => 'image/png',]
+    );
 ```
 
 ## 1.4 Get URL of image

@@ -10,18 +10,33 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Storage
 {
+    protected $storage;
+
+    /**
+     * Summary of initStorage
+     *
+     * @param string|null $disk
+     * @return self
+     */
+    public function initStorage(?string $disk = null): self
+    {
+        $this->storage = FacadesStorage::disk(($disk ?: config('filesystems.default')));
+
+        return $this;
+    }
+
     /**
      * Summary of uploadFile
      *
      * @return bool|string
      */
-    public function uploadFile(string $filePath, UploadedFile $uploadedFile): bool|string
+    public function uploadFile(?string $filePath = '', UploadedFile $uploadedFile): bool|string
     {
-        if (! $filePath || ! $uploadedFile) {
+        if (! $uploadedFile) {
             return false;
         }
 
-        if (! $storage = FacadesStorage::put($filePath, $uploadedFile)) {
+        if (! $storage = $this->storage->put($filePath, $uploadedFile)) {
             return false;
         }
 
@@ -37,8 +52,8 @@ class Storage
     {
         ob_end_clean();
 
-        return Response::make(FacadesStorage::get($fileUrl))
-                ->header('Content-Type', FacadesStorage::mimeType($fileUrl));
+        return Response::make($this->storage->get($fileUrl))
+                ->header('Content-Type', $this->storage->mimeType($fileUrl));
     }
 
     /**
@@ -53,7 +68,7 @@ class Storage
     {
         ob_end_clean();
 
-        if (! $storage = FacadesStorage::download($fileUrl, $fileName, $headers)) {
+        if (! $storage = $this->storage->download($fileUrl, $fileName, $headers)) {
             return false;
         }
 
@@ -68,10 +83,10 @@ class Storage
      */
     public function deleteFile(string $fileUrl):bool
     {
-        if (! FacadesStorage::disk(config('storage.disk'))->exists($fileUrl)) {
+        if (! $this->storage->exists($fileUrl)) {
             return false;
         }
 
-        return FacadesStorage::disk(config('storage.disk'))->delete($fileUrl);
+        return $this->storage->delete($fileUrl);
     }
 }
