@@ -10,36 +10,18 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Storage
 {
-    protected string $filePath;
-    protected UploadedFile $uploadedFile;
-
-    /**
-     * Summary of setFile
-     *
-     * @param string|null $filePath
-     * @param UploadedFile|null $uploadedFile
-     * @return self
-     */
-    public function setFile(?string $filePath, ?UploadedFile $uploadedFile): self
-    {
-        $this->uploadedFile = $uploadedFile;
-        $this->filePath = $filePath;
-
-        return $this;
-    }
-
     /**
      * Summary of uploadFile
      *
      * @return bool|string
      */
-    public function uploadFile(): bool|string
+    public function uploadFile(string $filePath, UploadedFile $uploadedFile): bool|string
     {
-        if ($this->filePath && $this->uploadedFile) {
+        if (! $filePath || ! $uploadedFile) {
             return false;
         }
 
-        if (! $storage = FacadesStorage::put($this->filePath, $this->uploadedFile)) {
+        if (! $storage = FacadesStorage::put($filePath, $uploadedFile)) {
             return false;
         }
 
@@ -86,8 +68,8 @@ class Storage
      */
     public function deleteFile(string $fileUrl):bool
     {
-        if (FacadesStorage::disk(config('storage.disk'))->exists($fileUrl)) {
-            return true;
+        if (! FacadesStorage::disk(config('storage.disk'))->exists($fileUrl)) {
+            return false;
         }
 
         return FacadesStorage::disk(config('storage.disk'))->delete($fileUrl);

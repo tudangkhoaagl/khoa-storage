@@ -1,6 +1,6 @@
 <?php
 
-namespace Khoa\KhoaStorage\StorageFacade;
+namespace Khoa\KhoaStorage\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

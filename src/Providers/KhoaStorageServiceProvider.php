@@ -4,7 +4,7 @@ namespace Khoa\KhoaStorage\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
-use Khoa\KhoaStorage\StorageFacade\StorageFacade;
+use Khoa\KhoaStorage\Facades\StorageFacade;
 use Khoa\KhoaStorage\Supports\Storage as KhoaStorage;
 
 class KhoaStorageServiceProvider extends ServiceProvider

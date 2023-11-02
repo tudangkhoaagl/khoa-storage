@@ -18,7 +18,7 @@ class GetStorageImageController extends Controller
      */
     public function __invoke(GetImageStorageImageRequest $request): Response|HttpResponse
     {
-        if (! $response = \StoragePackage::setFile($request->validated('file_url'))) {
+        if (! $response = \StoragePackage::getFile($request->validated('file_url'))) {
             return abort(404);
         }
 
